@@ -1,0 +1,169 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Ionic Blank
+    </ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content id="fondo">
+  <!-- parte superior de la pantalla -->
+  <ion-row class="white" id="contenedorTitulo">
+    <ion-col size="2" class="centrar">
+      <img src="assets/imgs/logo.png" alt="">
+    </ion-col>
+    <ion-col size="7" class="tituloPantalla">
+      consulta externa
+    </ion-col>
+    <ion-col size="3" id="contenedorHora">
+        <P class="horaActual">{{horaActual}}:{{minuts}}:{{seconds}}</P> 
+    </ion-col>
+  </ion-row> 
+  <!-- termina la parte superior de la pantalla -->
+
+  <ion-row id="contenedorCosultorios" *ngIf="horas">
+    <ion-col size="12" >
+      <ion-slides autoplay="1000" loop="true" speed="500" [options]="slideOpts">
+        <ion-slide >
+          <ion-grid>
+            <ion-row id="containerFilas">
+                <ion-col size="4" *ngFor="let consultorio of horas ; index as i" size="4" id="contenedorPersonas">
+                    <div class="contenedorPersonas" *ngIf="i < 6">
+                      <div class="bloqueConsultorio">
+                        <h3 class="consultorio"> {{consultorio[0].consult_obs}}</h3>
+                        <!-- <p class="especialidad">OTORRINOLARINGOLOGIA</p>  -->
+                      </div>
+                      <ion-list >
+                        <div *ngFor="let persona of consultorio">
+                          <ion-grid>
+                            <ion-row class="containerDatos">
+                              <ion-col size="2" class="horasFondo">
+                                <p class="horasfijas">{{persona.Hora | slice:0:5}}</p>
+                              </ion-col>
+                              <ion-col size="8" class="nombrePaciente">
+                                <ion-item  class="containerNombre">
+                                  <p *ngIf="persona.nombre == null" class="vacio">Disponible</p>
+                                  <p  [ngClass]="{'atencionA' : persona.estado == 'A', 'esperA' : persona.estado == 'E', 'citadoA': persona.estado == 'C' , 'finalizadoA': persona.estado == 'F'}" > {{persona.nombre | slice:0:1}}. {{persona.apellido1}}</p>
+                                </ion-item>
+                              </ion-col>  
+                              <ion-col size="2">
+                                  <p  [ngClass]="{'atencionAE' : persona.estado == 'A', 'esperAE' : persona.estado == 'E', 'citadoAE': persona.estado == 'C' , 'finalizadoAE': persona.estado == 'F'}">{{persona.estado}}</p>
+                                  <!-- <ion-item *ngFor="let persona of consultorio" >
+                                   <p *ngIf="persona.nombre == null" class="vacio">Disponible</p>
+                                   <p  [ngClass]="{'atencionA' : persona.estado == 'A', 'esperA' : persona.estado == 'E', 'citadoA': persona.estado == 'C' , 'finalizadoA': persona.estado == 'F'}" > {{persona.nombre | slice:0:1}}. {{persona.apellido1}}</p>
+                                   <p slot="end" [ngClass]="{'atencionAE' : persona.estado == 'P', 'esperAE' : persona.estado == 'E', 'citadoAE': persona.estado == 'C' , 'finalizadoAE': persona.estado == 'F'}">{{persona.estado}}</p>
+                                 </ion-item> -->
+                              </ion-col>
+                            </ion-row>
+                          </ion-grid>
+                          </div>
+                      </ion-list>
+                    </div> 
+                </ion-col>
+              </ion-row>
+          </ion-grid>  
+        </ion-slide>
+        <ion-slide *ngIf="horas.length > 6">
+            <ion-grid>
+              <ion-row id="containerFilas" >
+                  <ion-col size="4" *ngFor="let consultorio of horas ; index as i" size="4" id="contenedorPersonas">
+                      <div class="contenedorPersonas" *ngIf="i > 5">
+                        <div class="bloqueConsultorio">
+                          <h3 class="consultorio"> {{consultorio[0].consult_obs}}</h3>
+                        </div>
+                        <ion-list >
+                          <div *ngFor="let persona of consultorio">
+                            <ion-item>
+                              <ion-grid>
+                                <ion-row class="containerDatos">
+                                  <ion-col size="2" class="horasFondo">
+                                    <p class="horasfijas">{{persona.Hora | slice:0:5}}</p>
+                                  </ion-col>
+                                  <ion-col size="8" class="nombrePaciente">
+                                    <ion-item  class="containerNombre">
+                                      <p *ngIf="persona.nombre == null" class="vacio">Disponible</p>
+                                      <p  [ngClass]="{'atencionA' : persona.estado == 'A', 'esperA' : persona.estado == 'E', 'citadoA': persona.estado == 'C' , 'finalizadoA': persona.estado == 'F'}" > {{persona.nombre | slice:0:1}}. {{persona.apellido1}}</p>
+                                    </ion-item>
+                                  </ion-col>  
+                                  <ion-col size="2">
+                                      <p  [ngClass]="{'atencionAE' : persona.estado == 'A', 'esperAE' : persona.estado == 'E', 'citadoAE': persona.estado == 'C' , 'finalizadoAE': persona.estado == 'F'}">{{persona.estado}}</p>
+                                  </ion-col>
+                                </ion-row>
+                              </ion-grid>
+                            </ion-item>  
+                            </div>
+                        </ion-list>
+                      </div> 
+                  </ion-col>
+                </ion-row>
+            </ion-grid>  
+          </ion-slide>
+
+          <ion-slide *ngIf="horas.length > 11">
+            <ion-grid>
+              <ion-row id="containerFilas" >
+                  <ion-col size="4" *ngFor="let consultorio of horas ; index as i" size="4" id="contenedorPersonas">
+                      <div class="contenedorPersonas" *ngIf="i > 11">
+                        <div class="bloqueConsultorio">
+                          <h3 class="consultorio"> {{consultorio[0].consult_obs}}</h3>
+                          
+                        </div>
+                        <ion-list >
+                          <div *ngFor="let persona of consultorio">
+                            <ion-grid>
+                              <ion-row class="containerDatos">
+                                <ion-col size="2" class="horasFondo">
+                                  <p class="horasfijas">{{persona.Hora | slice:0:5}}</p>
+                                </ion-col>
+                                <ion-col size="8" class="nombrePaciente">
+                                  <ion-item  class="containerNombre">
+                                    <p *ngIf="persona.nombre == null" class="vacio">Disponible</p>
+                                    <p  [ngClass]="{'atencionA' : persona.estado == 'A', 'esperA' : persona.estado == 'E', 'citadoA': persona.estado == 'C' , 'finalizadoA': persona.estado == 'F'}" > {{persona.nombre | slice:0:1}}. {{persona.apellido1}}</p>
+                                  </ion-item>
+                                </ion-col>  
+                                <ion-col size="2">
+                                    <p  [ngClass]="{'atencionAE' : persona.estado == 'A', 'esperAE' : persona.estado == 'E', 'citadoAE': persona.estado == 'C' , 'finalizadoAE': persona.estado == 'F'}">{{persona.estado}}</p>
+                                </ion-col>
+                              </ion-row>
+                            </ion-grid>
+                            </div>
+                        </ion-list>
+                      </div> 
+                  </ion-col>
+                </ion-row>
+            </ion-grid>  
+          </ion-slide>
+      </ion-slides>
+      
+    </ion-col> 
+  </ion-row> 
+  <ion-row id="contenedorGlosa">
+    <ion-col size="4"></ion-col>
+    <ion-col size="8">
+      <ion-col size="3">
+        <ion-row>
+          <ion-col size="3">
+            <ul>
+                <li class="consultorio"> <span>A</span>  Atención</li>
+            </ul>
+          </ion-col> 
+          <ion-col size="3">
+              <ul>
+                  <li class="preconsulta"> <span>E</span>  Espera</li>
+              </ul>
+            </ion-col> 
+          <ion-col size="3">
+              <ul>
+                  <li class="espera"><span>C</span>  Citado</li>
+                </ul>
+          </ion-col>
+          <ion-col size="3">
+              <ul>
+                  <li class ="finalizado"><span>F</span> Finalizado</li>
+                </ul>
+          </ion-col> 
+        </ion-row> 
+      </ion-col>
+    </ion-col>
+  </ion-row>
+</ion-content>
